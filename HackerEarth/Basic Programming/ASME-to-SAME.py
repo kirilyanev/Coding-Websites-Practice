@@ -1,4 +1,5 @@
 number_of_tests = int(input())
+is_same = True
 
 for test in range(0, number_of_tests):
 
@@ -6,29 +7,30 @@ for test in range(0, number_of_tests):
     string_a = input()
     string_b = input()
 
-    result_a = ''.join(sorted(string_a, reverse=True))
-    result_b = ''.join(sorted(string_b, reverse=True))
+    char_counter_a = {}
+    char_counter_b = {}
 
-    count_a = 0
-    count_b = 0
+    for char in string_a:
+        if char == '?':
+            continue
+        if char not in char_counter_a:
+            char_counter_a[char] = 1
+        elif char in char_counter_a:
+            char_counter_a[char] += 1
 
-    for i in range(0, string_length):
-        char = result_a[i]
-        if char in result_b:
-            result_a = result_a.replace(char, '1')
-            result_b = result_b.replace(char, '1')
-        #if char == '?':
-        #    result_b = result_b.replace(result_b[i], '1')
+    for char in string_b:
+        if char not in char_counter_b:
+            char_counter_b[char] = 1
+        elif char in char_counter_b:
+            char_counter_b[char] += 1
 
-        for char in result_a:
-            if char == '1':
-                count_a += 1
-        for char in result_b:
-            if char == '1':
-                count_b += 1
-    result_a = result_a.replace('?', '1')
+    for key in char_counter_a:
+        if key in char_counter_b:
+            if char_counter_a[key] != char_counter_b[key]:
+                is_same = False
+                break
 
-    if count_a == count_b:
+    if is_same:
         print('Yes')
     else:
         print('No')
